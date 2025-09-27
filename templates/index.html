@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fact Checker - Verify News & Claims with AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta name="description" content="AI-powered fact checker that verifies news articles and claims using reputable sources">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-search-check"></i>
+                    <span>AI Fact Checker</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#sources" class="nav-link">Sources</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Verify News & Claims with AI</h1>
+                <p>Get instant fact-checking powered by artificial intelligence and reputable news sources</p>
+                
+                <!-- Input Methods Tabs -->
+                <div class="input-tabs">
+                    <button class="tab-btn active" data-tab="url">
+                        <i class="fas fa-link"></i>
+                        Check Article URL
+                    </button>
+                    <button class="tab-btn" data-tab="claim">
+                        <i class="fas fa-quote-right"></i>
+                        Verify Claim
+                    </button>
+                    <button class="tab-btn" data-tab="search">
+                        <i class="fas fa-search"></i>
+                        Search Info
+                    </button>
+                </div>
+
+                <!-- Input Forms -->
+                <div class="input-forms">
+                    <!-- URL Input -->
+                    <div class="input-form active" id="url-form">
+                        <div class="form-group">
+                            <label for="url-input">Enter News Article URL</label>
+                            <div class="input-wrapper">
+                                <input type="url" id="url-input" placeholder="https://example.com/news-article">
+                                <button type="button" id="url-submit" class="submit-btn">
+                                    <i class="fas fa-check"></i>
+                                    Fact Check
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Claim Input -->
+                    <div class="input-form" id="claim-form">
+                        <div class="form-group">
+                            <label for="claim-input">Enter Claim to Verify</label>
+                            <div class="input-wrapper">
+                                <textarea id="claim-input" placeholder="e.g., 'Did the President announce new climate policies?'"></textarea>
+                                <button type="button" id="claim-submit" class="submit-btn">
+                                    <i class="fas fa-check"></i>
+                                    Verify Claim
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Input -->
+                    <div class="input-form" id="search-form">
+                        <div class="form-group">
+                            <label for="search-input">Search for Information</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="search-input" placeholder="e.g., 'Latest climate change research'">
+                                <button type="button" id="search-submit" class="submit-btn">
+                                    <i class="fas fa-search"></i>
+                                    Search
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results">
+        <div class="container">
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Analyzing content and verifying with reputable sources...</p>
+            </div>
+
+            <!-- Results Display -->
+            <div class="results" id="results-display">
+                <!-- Fact Check Results -->
+                <div class="result-card fact-check-result" id="fact-check-result">
+                    <div class="result-header">
+                        <h2>Fact Check Results</h2>
+                        <div class="verdict-badge" id="verdict-badge">
+                            <span class="verdict-text" id="verdict-text">True</span>
+                        </div>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="claim-section">
+                            <h3><i class="fas fa-quote-left"></i> Claim Analyzed</h3>
+                            <p id="analyzed-claim"></p>
+                        </div>
+
+                        <div class="analysis-section">
+                            <h3><i class="fas fa-brain"></i> AI Analysis</h3>
+                            <div class="confidence-indicator">
+                                <span>Confidence Level: </span>
+                                <span class="confidence-level" id="confidence-level">High</span>
+                            </div>
+                            <p id="analysis-reasoning"></p>
+                        </div>
+
+                        <div class="sources-section">
+                            <h3><i class="fas fa-newspaper"></i> Reputable Sources</h3>
+                            <div class="sources-list" id="sources-list">
+                                <!-- Sources will be populated here -->
+                            </div>
+                        </div>
+
+                        <div class="processing-info">
+                            <small>Processing time: <span id="processing-time">0.0</span>s</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div class="result-card search-result" id="search-result">
+                    <div class="result-header">
+                        <h2>Search Results</h2>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="search-query-section">
+                            <h3><i class="fas fa-search"></i> Search Query</h3>
+                            <p id="search-query"></p>
+                        </div>
+
+                        <div class="search-content-section">
+                            <h3><i class="fas fa-info-circle"></i> Information Found</h3>
+                            <div id="search-content"></div>
+                        </div>
+
+                        <div class="search-sources-section">
+                            <h3><i class="fas fa-newspaper"></i> Sources</h3>
+                            <div class="sources-list" id="search-sources-list">
+                                <!-- Sources will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Error Display -->
+            <div class="error-display" id="error-display">
+                <div class="error-card">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Error</h3>
+                    <p id="error-message"></p>
+                    <button class="retry-btn" id="retry-btn">Try Again</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI-Powered Analysis</h3>
+                    <p>Advanced AI analyzes claims and searches through reputable news sources for verification</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-check"></i>
+                    <h3>Reputable Sources Only</h3>
+                    <p>We only use trusted news sources like Reuters, BBC, AP News, and other established outlets</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Unbiased Verification</h3>
+                    <p>Objective analysis based on evidence from multiple sources with transparency</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Real-Time Results</h3>
+                    <p>Get instant fact-checking results with detailed reasoning and source citations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sources Section -->
+    <section class="sources-section" id="sources">
+        <div class="container">
+            <h2>Trusted News Sources</h2>
+            <p>We verify information using only reputable and established news organizations:</p>
+            <div class="sources-grid">
+                <div class="source-item">Reuters</div>
+                <div class="source-item">Associated Press</div>
+                <div class="source-item">BBC News</div>
+                <div class="source-item">CNN</div>
+                <div class="source-item">NPR</div>
+                <div class="source-item">Wall Street Journal</div>
+                <div class="source-item">New York Times</div>
+                <div class="source-item">Washington Post</div>
+                <div class="source-item">The Guardian</div>
+                <div class="source-item">ABC News</div>
+                <div class="source-item">CBS News</div>
+                <div class="source-item">USA Today</div>
+                <div class="source-item">Bloomberg</div>
+                <div class="source-item">Politico</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <i class="fas fa-search-check"></i>
+                        <span>AI Fact Checker</span>
+                    </div>
+                    <p>Promoting media literacy through AI-powered fact verification</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Disclaimer</h4>
+                    <p>This tool provides AI-assisted fact-checking based on available sources. Always verify important information with multiple sources and use critical thinking.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AI Fact Checker. Built with FastAPI and OpenAI.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', path='/script.js') }}"></script>
+</body>
+</html>

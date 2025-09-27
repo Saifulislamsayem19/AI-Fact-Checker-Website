@@ -1,0 +1,45 @@
+# Web Framework
+fastapi
+uvicorn[standard]
+
+# Templates and Static Files
+jinja2
+aiofiles
+
+# OpenAI API
+openai
+
+# Web Scraping
+requests
+beautifulsoup4
+
+# Environment Variables
+python-dotenv
+
+# Data Validation
+pydantic
+
+# HTTP Client
+httpx
+
+# Async Support
+asyncio-ratelimiter
+
+# Logging
+structlog
+
+# HTML Parsing
+lxml
+
+# URL Parsing
+urllib3
+
+# Development Dependencies (optional)
+pytest
+pytest-asyncio
+black
+flake8
+
+# Production Dependencies (optional)
+gunicorn
+psutil
