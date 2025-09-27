@@ -1,6 +1,6 @@
-# AI Fact Checker 🔍
+# AI Fact Checker Website 🔍
 
-A sophisticated, AI-powered fact-checking application that analyzes news articles and claims against reputable sources to combat misinformation and fake news.
+This project is a fact-checking platform that analyzes news articles and user-submitted claims using AI and deterministic checks against a curated list of reputable sources. It returns a short verdict, supporting evidence (citations), and a confidence score to help users quickly assess reliability.
 
 <img width="1514" height="940" alt="image" src="https://github.com/user-attachments/assets/416426e8-26aa-4037-beeb-a37c1a05a599" />
 
